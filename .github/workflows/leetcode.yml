@@ -1,0 +1,23 @@
+name: Sync LeetCode to GitHub
+
+on:
+  workflow_dispatch:      # Cho phép bạn bấm nút chạy thủ công
+  schedule:
+    - cron: '0 0 * * *'   # Tự động chạy vào 00:00 mỗi ngày
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Sync LeetCode Solutions
+        uses: joshcai/leetcode-sync@v1.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          destination-folder: my-solutions # Thư mục sẽ lưu code
+          commit-header: '[LeetCode Sync]'
