@@ -1,0 +1,9 @@
+-- Write your PostgreSQL query statement below
+SELECT e.machine_id, ROUND(AVG(e.timestamp - s.timestamp)::numeric, 3) AS processing_time
+FROM Activity AS s
+JOIN Activity AS e
+ON s.machine_id = e.machine_id 
+    AND s.process_id = e.process_id
+    AND s.activity_type = 'start'
+    AND e.activity_type = 'end'
+GROUP BY e.machine_id
